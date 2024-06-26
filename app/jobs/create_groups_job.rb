@@ -7,8 +7,7 @@ class CreateGroupsJob < ApplicationJob
     # Checks if that date is a Monday. If it's the first Monday, it creates pairs; if it's an even week, it creates groups.
     def perform
       Rails.logger.info("Running CreateGroupsJob")
-      date = Date.today
-      if date.monday? && date.mday <= 7
+      
         if ENV["PAIRING_CHANNEL"].present?
           Rails.logger.info("It's the first Monday of the month! Generating pairs!")
           create_pairs
@@ -17,7 +16,7 @@ class CreateGroupsJob < ApplicationJob
           Rails.logger.info("It's a Monday on the right week! Generating groups!")
           create_groups
         end
-      end
+      
     end
 
     # Gets the users from the pairing channel (stored as an environment variable), groups,
